@@ -13,7 +13,15 @@ int spawnedProcessPid;
 
 @implementation IPARUtils
 + (NSDictionary *)executeCommandAndGetJSON:(NSString *)launchPath arg1:(NSString *)arg1 arg2:(NSString *)arg2 arg3:(NSString *)arg3 {
-    if (!launchPath.length) {
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSString *launchPathValidated = kLaunchPathBash;
+    #ifndef THEOS_PACKAGE_SCHEME_rootless
+        if (![fileManager fileExistsAtPath:launchPath]) {
+            launchPathValidated = kLaunchPathBashFallback;
+        }
+    #endif
+    
+    if (!launchPathValidated.length) {
         return @{kJsonLevel: kJsonLevelError, kJsonLevelError : @"Launch path cannot be empty" };
     }
     
@@ -45,10 +53,10 @@ int spawnedProcessPid;
     }
 
     pid_t pid;
-    const char *argv[] = { [launchPath UTF8String], [arg1 UTF8String], 
+    const char *argv[] = { [launchPathValidated UTF8String], [arg1 UTF8String], 
                           [arg2 UTF8String], [arg3 UTF8String], NULL };
     
-    int spawnError = posix_spawn(&pid, [launchPath UTF8String], &actions, NULL, 
+    int spawnError = posix_spawn(&pid, [launchPathValidated UTF8String], &actions, NULL, 
                                 (char* const*)argv, NULL);
     posix_spawn_file_actions_destroy(&actions);
     

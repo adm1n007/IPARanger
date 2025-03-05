@@ -18,10 +18,13 @@ static const int APPS_SEARCH_INITIAL_LIMIT = 12;
     static NSString *const kIPARangerAppsCacheDirPath = @"/var/jb/Library/IPARanger/cacheDir/AppCache.plist";
     static NSString *const kIpatoolScriptPath = @"/var/jb/Applications/IPARanger.app/ipatool/ipatool";
     static NSString *const kAppinstScriptPath = @"/var/jb/Applications/IPARanger.app/ipatool/appinst";
-    static NSString *const kIPARangerVersion = @"IPA Ranger version: 2.1 (rootless)";
+    static NSString *const kIPARangerVersion = @"IPA Ranger version: 2.2 (rootless)";
 #else
     /** ROOTFUL CONSTANTS **/
-    static NSString *const kLaunchPathBash = @"/bin/sh";
+    // default
+    static NSString *const kLaunchPathBash = @"/usr/bin/zsh";
+    // fallback
+    static NSString *const kLaunchPathBashFallback = @"/bin/sh";
     static NSString *const kLaunchPathUnzip = @"/usr/bin/unzip";
     static NSString *const kLaunchPathPlutil = @"/usr/bin/plutil";
     static NSString *const kLaunchPathLs = @"/bin/ls";
@@ -35,7 +38,7 @@ static const int APPS_SEARCH_INITIAL_LIMIT = 12;
     static NSString *const kIPARangerAppsCacheDirPath = @"/var/mobile/Documents/IPARanger/cacheDir/AppCache.plist";
     static NSString *const kIpatoolScriptPath = @"/Applications/IPARanger.app/ipatool/ipatool";
     static NSString *const kAppinstScriptPath = @"/Applications/IPARanger.app/ipatool/appinst";
-    static NSString *const kIPARangerVersion = @"IPA Ranger version: 2.1 (rootful)";
+    static NSString *const kIPARangerVersion = @"IPA Ranger version: 2.2 (rootful)";
 #endif
 
 static NSString *const kIPARCountryChangedNotification = @"com.0xkuj.iparanger.countryChanged";
